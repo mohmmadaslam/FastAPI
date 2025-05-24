@@ -11,7 +11,7 @@ Run the following command to create a virtual environment:
 ```bash
 python3 -m venv venv
 ```
-#### For macOS
+#### Activate Env
 
 ```bash
 source venv/bin/activate

@@ -36,12 +36,134 @@ uvicorn main:app --reload
 ### The API will be available at: http://127.0.0.1:8000
 
 #### 4. API Endpoints
-##### GET /: Welcome message.
-##### GET /about: About the API.
-##### GET /view: View all patient records.
-##### GET /patient/{patient_id}: View a specific patient by ID.
-##### GET /sort: Sort patients by height, weight, or BMI.
-##### POST /create: Create a new patient record.
+
+### 1. **Welcome Endpoint**
+- **URL**: `/`
+- **Method**: `GET`
+- **Description**: Returns a welcome message.
+- **Response**:
+  ```json
+  {
+    "message": "Patient Management System API"
+  }
+  ```
+
+---
+
+### 2. **About Endpoint**
+- **URL**: `/about`
+- **Method**: `GET`
+- **Description**: Provides information about the API.
+- **Response**:
+  ```json
+  {
+    "message": "A fully functional API to manage your patient records"
+  }
+  ```
+
+---
+
+### 3. **View All Patients**
+- **URL**: `/view`
+- **Method**: `GET`
+- **Description**: Retrieves all patient records.
+- **Response**:
+  ```json
+  {
+    "P001": {
+      "name": "John Doe",
+      "city": "New York",
+      "age": 30,
+      "gender": "male",
+      "height": 1.75,
+      "weight": 70,
+      "bmi": 22.86,
+      "verdict": "Normal"
+    }
+  }
+  ```
+
+---
+
+### 4. **View a Specific Patient**
+- **URL**: `/patient/{patient_id}`
+- **Method**: `GET`
+- **Description**: Retrieves a specific patient record by their ID.
+- **Path Parameter**:
+  - `patient_id` (string): The ID of the patient.
+- **Response**:
+  - **200 OK**: Returns the patient record.
+  - **404 Not Found**: Patient not found.
+
+---
+
+### 5. **Sort Patients**
+- **URL**: `/sort`
+- **Method**: `GET`
+- **Description**: Sorts patient records by height, weight, or BMI.
+- **Query Parameters**:
+  - `sort_by` (string): The field to sort by (`height`, `weight`, or `bmi`).
+  - `order` (string): The sort order (`asc` for ascending, `desc` for descending).
+- **Response**:
+  - **200 OK**: Returns the sorted list of patients.
+  - **400 Bad Request**: Invalid field or order specified.
+
+---
+
+### 6. **Create a New Patient**
+- **URL**: `/create`
+- **Method**: `POST`
+- **Description**: Adds a new patient record.
+- **Request Body**:
+  ```json
+  {
+    "id": "P001",
+    "name": "John Doe",
+    "city": "New York",
+    "age": 30,
+    "gender": "male",
+    "height": 1.75,
+    "weight": 70
+  }
+  ```
+- **Response**:
+  - **201 Created**: Patient created successfully.
+  - **400 Bad Request**: Patient with the same ID already exists.
+
+---
+
+### 7. **Update a Patient**
+- **URL**: `/edit/{patient_id}`
+- **Method**: `PUT`
+- **Description**: Updates an existing patient record.
+- **Path Parameter**:
+  - `patient_id` (string): The ID of the patient to update.
+- **Request Body**:
+  ```json
+  {
+    "name": "Jane Doe",
+    "city": "Los Angeles",
+    "age": 28,
+    "height": 1.65,
+    "weight": 60
+  }
+  ```
+- **Response**:
+  - **200 OK**: Patient updated successfully.
+  - **404 Not Found**: Patient not found.
+
+---
+
+### 8. **Delete a Patient**
+- **URL**: `/delete/{patient_id}`
+- **Method**: `DELETE`
+- **Description**: Deletes a patient record.
+- **Path Parameter**:
+  - `patient_id` (string): The ID of the patient to delete.
+- **Response**:
+  - **200 OK**: Patient deleted successfully.
+  - **404 Not Found**: Patient not found.
+
 
 ### 5. Deactivate the Virtual Environment
 When you're done, deactivate the virtual environment:
@@ -55,7 +177,9 @@ deactivate
 
 This API supports the following CRUD (Create, Read, Update, Delete) operations for managing patient records:
 
-### 1. **Create**
+---
+
+### 1. **Create a New Patient**
 - **Endpoint**: `POST /create`
 - **Description**: Adds a new patient record to the database.
 - **Request Body**:
@@ -76,7 +200,7 @@ This API supports the following CRUD (Create, Read, Update, Delete) operations f
 
 ---
 
-### 2. **Read**
+### 2. **Read Patient Records**
 #### a. View All Patients
 - **Endpoint**: `GET /view`
 - **Description**: Retrieves all patient records.
@@ -100,20 +224,42 @@ This API supports the following CRUD (Create, Read, Update, Delete) operations f
 - **Endpoint**: `GET /patient/{patient_id}`
 - **Description**: Retrieves a specific patient record by ID.
 - **Path Parameter**:
-  - `patient_id`: The ID of the patient (e.g., `P001`).
+  - `patient_id` (string): The ID of the patient (e.g., `P001`).
 - **Response**:
   - **200 OK**: Returns the patient record.
   - **404 Not Found**: Patient not found.
 
 ---
 
-### 3. **Update**
-- **Description**: Currently, the API does not support updating patient records. This feature can be added in the future.
+### 3. **Update a Patient**
+- **Endpoint**: `PUT /edit/{patient_id}`
+- **Description**: Updates an existing patient record.
+- **Path Parameter**:
+  - `patient_id` (string): The ID of the patient to update.
+- **Request Body**:
+  ```json
+  {
+    "name": "Jane Doe",
+    "city": "Los Angeles",
+    "age": 28,
+    "height": 1.65,
+    "weight": 60
+  }
+  ```
+- **Response**:
+  - **200 OK**: Patient updated successfully.
+  - **404 Not Found**: Patient not found.
 
 ---
 
-### 4. **Delete**
-- **Description**: Currently, the API does not support deleting patient records. This feature can be added in the future.
+### 4. **Delete a Patient**
+- **Endpoint**: `DELETE /delete/{patient_id}`
+- **Description**: Deletes a patient record.
+- **Path Parameter**:
+  - `patient_id` (string): The ID of the patient to delete.
+- **Response**:
+  - **200 OK**: Patient deleted successfully.
+  - **404 Not Found**: Patient not found.
 
 ---
 
@@ -127,6 +273,14 @@ This API supports the following CRUD (Create, Read, Update, Delete) operations f
   - **200 OK**: Returns the sorted list of patients.
   - **400 Bad Request**: Invalid field or order specified.
 
+---
+
+### Notes
+- **Validation**: The API validates input data using Pydantic models.
+- **Error Handling**: Returns appropriate HTTP status codes and error messages for invalid requests.
+- **Data Storage**: Patient records are stored in a JSON file (`patients.json`).
+
+---
 
 ## Common HTTP Response Status Codes
 

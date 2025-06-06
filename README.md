@@ -324,3 +324,37 @@ This API supports the following CRUD (Create, Read, Update, Delete) operations f
 - **3xx** codes indicate redirection.
 - **4xx** codes indicate client-side errors.
 - **5xx** codes indicate server-side errors.
+
+---
+
+# Machine learning model with FastAPI
+
+## library required to install
+
+```bash
+pip install pandas scikit-learn
+```
+
+---
+
+# Frontend for FastAPI
+
+## library required to install
+
+```bash
+pip install streamlit
+```
+
+--- 
+
+# to run the API run the below command in one of the terminal
+```bash
+uvicorn app:app --reload
+```
+
+# to run the app, execute below command in one of the terminal
+```bash
+streamlit run frontend.py
+```
+
+---
